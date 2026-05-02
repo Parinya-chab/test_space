@@ -9,7 +9,10 @@ from pathlib import Path
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from starlette.concurrency import run_in_threadpool
 
-from .asr_engine import DEFAULT_MODEL_NAME, format_metrics, get_asr_engine
+try:
+    from .asr_engine import DEFAULT_MODEL_NAME, format_metrics, get_asr_engine
+except ImportError:  # Allows: uvicorn asr_service:app from the typhoon directory
+    from asr_engine import DEFAULT_MODEL_NAME, format_metrics, get_asr_engine
 
 logger = logging.getLogger(__name__)
 
